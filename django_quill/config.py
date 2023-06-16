@@ -34,24 +34,45 @@ DEFAULT_CONFIG = {
         },
     },
 }
+# TODO Add static files (CDN IS BAD FOR PRIVACY!)
 MEDIA_JS = [
     # syntax-highlight
-    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js",
+    # "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js",
+    "django_quill/vendor/highlight.min.js",
     # quill
-    "https://cdn.quilljs.com/1.3.7/quill.min.js",
+    # "https://cdn.quilljs.com/1.3.7/quill.min.js",
+    "django_quill/vendor/quill.min.js",
     # quill-image-compress
-    "https://cdn.jsdelivr.net/npm/quill-image-compress@1.2.21/dist/quill.imageCompressor.min.js",
+    # "https://cdn.jsdelivr.net/npm/quill-image-compress@1.2.21/dist/quill.imageCompressor.min.js",
+    "django_quill/vendor/quill.imageCompressor.min.js",
+    # quill-image-uploader
+    "django_quill/vendor/quill.imageUploader.min.js",
     # quill-resize
-    "https://cdn.jsdelivr.net/npm/@botom/quill-resize-module@2.0.0/dist/quill-resize-module.min.js",
+    # "https://cdn.jsdelivr.net/npm/@botom/quill-resize-module@2.0.0/dist/quill-resize-module.min.js",
+    "django_quill/vendor/quill-resize-module.min.js",
     # custom
     "django_quill/django_quill.js",
 ]
 MEDIA_CSS = [
     # syntax-highlight
-    "https://cdn.quilljs.com/1.3.7/quill.snow.css",
-    "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/darcula.min.css",
+    # "https://cdn.quilljs.com/1.3.7/quill.snow.css",
+    "django_quill/vendor/quill.snow.css",
+    # "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/darcula.min.css",
+    "django_quill/vendor/darcula.min.css",
+    # quill-image-uploader
+    "django_quill/vendor/quill.imageUploader.min.css",
     # quill-resize
-    "https://cdn.jsdelivr.net/npm/quill-resize-module@1.2.4/dist/resize.min.css",
+    # "https://cdn.jsdelivr.net/npm/quill-resize-module@1.2.4/dist/resize.min.css",
+    "django_quill/vendor/resize.min.css",
     # custom
     "django_quill/django_quill.css",
 ]
+
+QUILL_IU_IMAGE_BACKEND = 'django_quill.backends.DummyBackend'
+QUILL_IU_STORAGE_BACKEND = 'django.core.files.storage.DefaultStorage'
+QUILL_IU_RESTRICT_BY_DATE = True
+QUILL_IU_SLUGIFY_FILENAME = True
+QUILL_IU_ADD_TIMESTAMP = True
+QUILL_IU_ADD_USER_ID = True
+QUILL_IU_FILENAME_GENERATOR = False
+QUILL_IU_ALLOW_NONIMAGE_FILES = False

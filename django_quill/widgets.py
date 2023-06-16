@@ -6,6 +6,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
 from django.forms.renderers import get_default_renderer
 from django.forms.utils import flatatt
+from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_str
 from django.utils.functional import Promise
 from django.utils.safestring import mark_safe
@@ -15,6 +16,7 @@ from .config import DEFAULT_CONFIG, MEDIA_JS, MEDIA_CSS
 __all__ = (
     "LazyEncoder",
     "QuillWidget",
+    "QuillUploadWidget",
 )
 
 
@@ -83,3 +85,10 @@ class QuillWidget(forms.Textarea):
                 },
             )
         )
+
+
+class QuillUploadWidget(QuillWidget):
+
+    def __init__(self, config_name="default", *args, **kwargs):
+        super().__init__(config_name, *args, **kwargs)
+        self.config.setdefault("uploadUrl", reverse_lazy("quill_upload"))

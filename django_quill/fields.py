@@ -1,7 +1,6 @@
 from django.db import models
-from django.utils.html import strip_tags
 
-from .forms import QuillFormField
+from .forms import QuillFormField, QuillUploadFormField
 from .quill import Quill
 
 __all__ = (
@@ -110,8 +109,11 @@ class QuillField(models.TextField):
     descriptor_class = QuillDescriptor
 
     def formfield(self, **kwargs):
-        kwargs.update({"form_class": QuillFormField})
-        return super().formfield(**kwargs)
+        defaults = {
+            "form_class": QuillFormField,
+        }
+        defaults.update(kwargs)
+        return super().formfield(**defaults)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -149,3 +151,19 @@ class QuillField(models.TextField):
     def value_to_string(self, obj):
         value = self.value_from_object(obj)
         return self.get_prep_value(value)
+
+
+class QuillUploadField(QuillField):
+    attr_class = FieldQuill
+    descriptor_class = QuillDescriptor
+
+    def formfield(self, **kwargs):
+        defaults = {
+            "form_class": QuillUploadFormField,
+        }
+        defaults.update(kwargs)
+        return super().formfield(**defaults)
+
+    @staticmethod
+    def _get_form_class():
+        return QuillUploadFormField
