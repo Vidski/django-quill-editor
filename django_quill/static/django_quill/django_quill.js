@@ -38,7 +38,10 @@ class QuillWrapper {
         this.quill.on('text-change', () => {
             var delta = JSON.stringify(this.quill.getContents());
             var html = this.targetDiv.getElementsByClassName('ql-editor')[0].innerHTML;
-            var data = {delta: delta, html: html};
+            var data = {
+                delta: delta,
+                html: html
+            };
             this.targetInput.value = JSON.stringify(data);
         });
     }

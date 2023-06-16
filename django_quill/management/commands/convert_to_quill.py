@@ -32,7 +32,7 @@ class Command(BaseCommand):
                     print(f" This is already a QuillField.")
                     continue
                 except QuillParseError:
-                    field_data = field_data.json_string
+                    field_data = field_data.data
             try:
                 json_data = json.loads(field_data)
                 if "delta" in json_data:
