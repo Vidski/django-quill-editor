@@ -1,6 +1,7 @@
 Quill.register("modules/imageCompressor", imageCompressor);
 Quill.register("modules/resize", window.QuillResizeModule);
 Quill.register("modules/imageUploader", ImageUploader)
+Quill.register('modules/quillMention', quillMention);
 
 class QuillWrapper {
     constructor(targetDivId, targetInputId, quillOptions) {
@@ -34,9 +35,37 @@ class QuillWrapper {
                 });
             }
         }
+        const atValues = [
+            {id: 1, value: "David Rydwanski"},
+            {id: 2, value: "Patrick Rydwanski"}
+        ];
+        quillOptions['modules']['mention'] = {
+            allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+            mentionDenotationChars: ["@", "#"],
+            source: function (searchTerm, renderList, mentionChar) {
+                let values;
+
+                if (mentionChar === "@") {
+                    values = atValues;
+                }
+
+                if (searchTerm.length === 0) {
+                    renderList(values, searchTerm);
+                } else {
+                    const matches = [];
+                    for (let i = 0; i < values.length; i++)
+                        if (
+                            ~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())
+                        )
+                            matches.push(values[i]);
+                    renderList(matches, searchTerm);
+                }
+            }
+        }
+
         this.quill = new Quill('#' + targetDivId, quillOptions);
         this.quill.on('text-change', () => {
-            var delta = JSON.stringify(this.quill.getContents());
+            var delta = this.quill.getContents();
             var html = this.targetDiv.getElementsByClassName('ql-editor')[0].innerHTML;
             var data = {
                 delta: delta,

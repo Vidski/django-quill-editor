@@ -25,8 +25,6 @@ class Quill:
             except json.JSONDecodeError:
                 raise QuillParseError(data)
 
-        if data.get('delta', False) and isinstance(data['delta'], str):
-            data['delta'] = json.loads(data['delta'])
         self.data = data
         try:
             self.delta = data['delta']

@@ -69,6 +69,4 @@ class QuillWidget(forms.Textarea):
         return context
 
     def format_value(self, value):
-        if isinstance(value['delta'], str):
-            value['delta'] = json.loads(value['delta'])
         return json_encode(value)
