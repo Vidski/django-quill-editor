@@ -35,31 +35,36 @@ class QuillWrapper {
                 });
             }
         }
-        const atValues = [
-            {id: 1, value: "David Rydwanski"},
-            {id: 2, value: "Patrick Rydwanski"}
-        ];
         quillOptions['modules']['mention'] = {
             allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
             mentionDenotationChars: ["@", "#"],
             source: function (searchTerm, renderList, mentionChar) {
                 let values;
+                let endpoint;
 
                 if (mentionChar === "@") {
-                    values = atValues;
+                    endpoint = `/api/quill/users/?search=${searchTerm}`;
+                } else if (mentionChar === "#") {
+                    endpoint = `/api/quill/tags/?name__icontains=${searchTerm}`;
                 }
 
-                if (searchTerm.length === 0) {
-                    renderList(values, searchTerm);
-                } else {
-                    const matches = [];
-                    for (let i = 0; i < values.length; i++)
-                        if (
-                            ~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())
-                        )
-                            matches.push(values[i]);
-                    renderList(matches, searchTerm);
-                }
+                fetch(endpoint)
+                    .then(response => response.json())
+                    .then(data => {
+                        values = data.results;
+                        if (searchTerm.length === 0) {
+                            renderList(values, searchTerm);
+                        } else {
+                            const matches = [];
+                            for (let i = 0; i < values.length; i++)
+                                if (~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase()))
+                                    matches.push(values[i]);
+                            renderList(matches, searchTerm);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
             }
         }
 
