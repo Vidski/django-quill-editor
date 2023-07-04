@@ -46,9 +46,9 @@ class QuillWrapper {
                     let values;
                     let endpoint;
 
-                    if (mentionChar === "@" && quillOptions['modules']['mention']['mention'] === true) {
+                    if (mentionChar === "@") {
                         endpoint = `${quillOptions['mentionsUrl']}?search=${searchTerm}`;
-                    } else if (mentionChar === "#" && quillOptions['modules']['mention']['tags'] === true) {
+                    } else if (mentionChar === "#") {
                         endpoint = `${quillOptions['tagsUrl']}?name__icontains=${searchTerm}`;
                     }
 
