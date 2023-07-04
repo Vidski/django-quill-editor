@@ -100,6 +100,46 @@ class ImageUploadView(generic.View):
 upload = csrf_exempt(ImageUploadView.as_view())
 
 
+class UsersView(generic.View):
+    http_method_names = ["get"]
+
+    def get(self, request, **kwargs):
+        retdata = {
+            "results": [
+                {
+                    "id": 1,
+                    "value": "Max Mustermann"
+                }
+            ]
+        }
+        return JsonResponse(retdata)
+
+
+users = csrf_exempt(UsersView.as_view())
+
+
+class TagsView(generic.View):
+    http_method_names = ["get"]
+
+    def get(self, request, **kwargs):
+        retdata = {
+            "results": [
+                {
+                    "id": 1,
+                    "value": "Important"
+                },
+                {
+                    "id": 2,
+                    "value": "Invoice"
+                }
+            ]
+        }
+        return JsonResponse(retdata)
+
+
+tags = csrf_exempt(TagsView.as_view())
+
+
 class S3RedirectView(generic.View):
     http_method_names = ['get']
 

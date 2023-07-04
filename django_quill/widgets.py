@@ -1,4 +1,3 @@
-import json
 from collections.abc import Mapping
 
 from django import forms
@@ -51,6 +50,8 @@ class QuillWidget(forms.Textarea):
         self.config = DEFAULT_CONFIG.copy()
         configs = getattr(settings, 'QUILL_CONFIGS', None)
         self.config.setdefault("uploadUrl", reverse_lazy("quill_upload"))
+        self.config.setdefault("mentionsUrl", reverse_lazy("quill_mentions"))
+        self.config.setdefault("tagsUrl", reverse_lazy("quill_tags"))
         if configs:
             if isinstance(configs, Mapping):
                 if config_name in configs:
