@@ -47,9 +47,9 @@ class QuillWrapper {
                     let endpoint;
 
                     if (mentionChar === "@" && quillOptions['modules']['mention']['mention'] === true) {
-                        endpoint = `/api/quill/users/?search=${searchTerm}`;
+                        endpoint = `${quillOptions['mentionsUrl']}?search=${searchTerm}`;
                     } else if (mentionChar === "#" && quillOptions['modules']['mention']['tags'] === true) {
-                        endpoint = `/api/quill/tags/?name__icontains=${searchTerm}`;
+                        endpoint = `${quillOptions['tagsUrl']}?name__icontains=${searchTerm}`;
                     }
 
                     fetch(endpoint)
