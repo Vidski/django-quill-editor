@@ -144,6 +144,9 @@ def QuillField(*args, **kwargs):
 
 class QuillJSONField(QuillFieldMixin, models.JSONField):
 
+    def get_default_dict(cls):
+        return dict(delta="", html="")
+
     def from_db_value(self, value, expression, connection):
         return self.to_python(value)
 
