@@ -11,6 +11,15 @@ class QuillWrapper {
         this.targetInput = document.getElementById(targetInputId);
         if (!this.targetInput) throw 'Target Input id was invalid';
 
+        if (quillOptions['useStyleOnly']) {
+            const ColorClass = Quill.import('attributors/style/color');
+            const SizeStyle = Quill.import('attributors/style/size');
+            const AlignStyle = Quill.import('attributors/style/align');
+            Quill.register(ColorClass, true);
+            Quill.register(SizeStyle, true);
+            Quill.register(AlignStyle, true);
+        }
+
         if (quillOptions['modules']['imageUploader']) {
             quillOptions['modules']['imageUploader'] = {
                 upload: (file) => {
